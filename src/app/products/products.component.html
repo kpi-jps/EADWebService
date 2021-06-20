@@ -1,0 +1,57 @@
+<button class="button-black button-large" type="button" (click) = "starRegister()">Cadastrar Produto</button>
+<div id="confirm"></div>
+<div *ngIf = "!hasProducts"> Não há produtos cadastrados! </div>
+<table *ngIf = "hasProducts">
+    <thead>
+        <tr>
+            <th> Nome do produco</th>
+            <th> Descrição</th>
+            <th> Preço</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of productsList; let i = index" [class.striped] = "i%2 == 0">
+            <td> {{p.title}} </td>
+            <td> {{p.description}} </td>
+            <td> {{p.price | currency}} </td>
+            <td> <button  class = "button-blue button-small" (click) = "startUpdate(p.title, p.description, p.price, p._id)">Editar</button></td>
+            <td> <button class = "button-red button-small" (click) = "deleteProduct(p._id)">Delete</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<div id="register-form-container" *ngIf = "register">
+    <div id="register-form">
+        <label>Produto:
+        <input [(ngModel)]="product.title" placeholder="Produto">
+        </label>
+        <label>Descrição:
+        <input [(ngModel)]="product.description" type="text" min="0.0" step="0.01" placeholder="Descrição">
+        </label>
+        <label>Preço:
+        <input [(ngModel)]="product.price" type="number" min="0.0" step="0.01" placeholder="Preço">
+        </label>
+        <button class = "button-blue button-large" (click) = "registerProduct()">Registrar</button> 
+        <button class = "button-red button-large" (click) = "cancelRegister()">Cancelar</button>
+    </div>
+</div>   
+
+<div id="update-form-container" *ngIf = "update"> 
+    <div id="update-form">
+        <label>Produto:
+        <input [(ngModel)]="selectedProduct.title" placeholder="Produto">
+        </label>
+        <label>Descrição:
+        <input [(ngModel)]="selectedProduct.description" type="text" min="0.0" step="0.01" placeholder="Descrição">
+        </label>
+        <label>Preço:
+        <input [(ngModel)]="selectedProduct.price" type="number" min="0.0" step="0.01" placeholder="Preço">
+        </label>
+        <button class = "button-blue button-large" (click) = "updateProduct(idSelectedProduct)">Editar</button> 
+        <button class = "button-red button-large" (click) = "cancelUpdate()">Cancelar</button>
+    </div>
+    
+</div>
+
